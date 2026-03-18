@@ -24,7 +24,7 @@ function TitleSlide() {
         <div className="geo-diamond" />
       </div>
       <div className="relative z-10" style={{ animation: "fadeUp 0.7s ease both" }}>
-        <div className="label-pill mb-6">Социальная тема · 2024</div>
+        <div className="label-pill mb-6">Подсухин Алексей · Антонов Тимур · 112 ЛД</div>
         <h1 className="font-display text-5xl md:text-7xl font-light text-white leading-tight mb-4">
           Место человека
           <br />
