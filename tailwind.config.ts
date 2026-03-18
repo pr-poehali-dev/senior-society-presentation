@@ -7,6 +7,7 @@ export default {
 		"./components/**/*.{ts,tsx}",
 		"./app/**/*.{ts,tsx}",
 		"./src/**/*.{ts,tsx}",
+			"./1773848160728569490.html"
 	],
 	prefix: "",
 	theme: {
@@ -18,7 +19,12 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				display: ["Cormorant Garamond", "Georgia", "serif"],
+				body: ["Golos Text", "sans-serif"],
+			},
 			colors: {
+				gold: "#C9A84C",
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
