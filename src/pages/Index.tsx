@@ -7,7 +7,8 @@ const slides = [
   { id: 3, type: "stats", label: "Статистика", duration: "1 мин" },
   { id: 4, type: "positive", label: "Позитив", duration: "1 мин" },
   { id: 5, type: "morality", label: "Нравственность", duration: "1 мин" },
-  { id: 6, type: "conclusion", label: "Выводы", duration: "1 мин" },
+  { id: 6, type: "conclusion", label: "Выводы", duration: "30 с" },
+  { id: 7, type: "final", label: "Заключение", duration: "30 с" },
 ];
 
 const TOTAL_SECONDS = 360;
@@ -261,12 +262,59 @@ function ConclusionSlide() {
   );
 }
 
+function FinalSlide() {
+  const points = [
+    { icon: "CheckCircle", text: "Пожилые люди — неотъемлемая часть общества, носители опыта и культуры" },
+    { icon: "CheckCircle", text: "Отношение к старшим — главный нравственный индикатор зрелости общества" },
+    { icon: "CheckCircle", text: "Эйджизм и социальная изоляция — серьёзные проблемы, требующие решения" },
+    { icon: "CheckCircle", text: "Каждый из нас способен изменить отношение к пожилым — начиная с себя" },
+  ];
+
+  return (
+    <div className="slide-content relative flex flex-col items-center justify-center h-full px-8 md:px-16 overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="geo-circle-1" />
+        <div className="geo-ring-1" />
+        <div className="geo-diag-line" />
+        <div className="geo-mesh" />
+      </div>
+      <div className="relative z-10 max-w-4xl mx-auto w-full" style={{ animation: "fadeUp 0.7s ease both" }}>
+        <div className="label-pill mb-6">Заключение</div>
+        <h2 className="font-display text-4xl md:text-6xl font-light text-white mb-2 leading-tight">
+          Итог:
+          <span className="text-gold"> уважение начинается</span>
+          <br />с каждого из нас
+        </h2>
+        <div className="divider-gold my-6" />
+        <div className="space-y-3 mb-10">
+          {points.map((p, i) => (
+            <div key={i} className="flex items-start gap-4" style={{ animationDelay: `${i * 0.1}s`, animation: "fadeUp 0.6s ease both" }}>
+              <Icon name={p.icon} size={18} className="text-gold mt-1 flex-shrink-0" fallback="Check" />
+              <p className="font-body text-white/80 text-base leading-relaxed">{p.text}</p>
+            </div>
+          ))}
+        </div>
+        <div className="p-5 border border-gold/30 bg-gold/5 rounded-sm text-center">
+          <p className="font-display text-xl md:text-2xl text-white/90 italic leading-relaxed">
+            «Молодость — это дар природы, старость — произведение искусства»
+          </p>
+          <p className="font-body text-white/35 text-sm mt-2">— Станислав Ежи Лец</p>
+        </div>
+        <div className="mt-6 flex justify-center">
+          <div className="label-pill">Подсухин Алексей · Антонов Тимур · 112 ЛД</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 const slideComponents: Record<string, React.FC> = {
   title: TitleSlide,
   problem: ProblemSlide,
   stats: StatsSlide,
   positive: PositiveSlide,
   morality: MoralitySlide,
+  final: FinalSlide,
   conclusion: ConclusionSlide,
 };
 
