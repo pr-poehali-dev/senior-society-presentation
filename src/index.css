@@ -695,3 +695,45 @@
   height: 100%;
   background: linear-gradient(135deg, #0a0c10 0%, #111420 50%, #0d0f14 100%);
 }
+
+/* ─── Print / PDF ─── */
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+
+  body {
+    background: #0a0c10 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .pres-root {
+    position: relative !important;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .pres-topbar,
+  .pres-dots,
+  .pres-arrow,
+  .pres-kbd-hint {
+    display: none !important;
+  }
+
+  .pres-stage {
+    position: relative !important;
+    width: 297mm;
+    height: 210mm;
+    page-break-after: always;
+  }
+
+  .slide-content {
+    width: 297mm;
+    height: 210mm;
+    page-break-after: always;
+    overflow: hidden;
+  }
+}

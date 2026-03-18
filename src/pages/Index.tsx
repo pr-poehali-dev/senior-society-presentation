@@ -275,6 +275,25 @@ export default function Index() {
   const [timerRunning, setTimerRunning] = useState(false);
   const [elapsed, setElapsed] = useState(0);
   const [transitioning, setTransitioning] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  const toggleFullscreen = useCallback(() => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().then(() => setIsFullscreen(true));
+    } else {
+      document.exitFullscreen().then(() => setIsFullscreen(false));
+    }
+  }, []);
+
+  useEffect(() => {
+    const onFsChange = () => setIsFullscreen(!!document.fullscreenElement);
+    document.addEventListener("fullscreenchange", onFsChange);
+    return () => document.removeEventListener("fullscreenchange", onFsChange);
+  }, []);
+
+  const handlePrint = useCallback(() => {
+    window.print();
+  }, []);
 
   const goTo = useCallback(
     (idx: number) => {
@@ -307,10 +326,12 @@ export default function Index() {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "ArrowRight" || e.key === "ArrowDown") goTo(current + 1);
       if (e.key === "ArrowLeft" || e.key === "ArrowUp") goTo(current - 1);
+      if (e.key === "f" || e.key === "F") toggleFullscreen();
+      if (e.key === "Escape" && isFullscreen) document.exitFullscreen();
     };
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
-  }, [current, goTo]);
+  }, [current, goTo, toggleFullscreen, isFullscreen]);
 
   const minutes = Math.floor(elapsed / 60);
   const seconds = elapsed % 60;
@@ -335,6 +356,13 @@ export default function Index() {
         </div>
 
         <div className="flex items-center gap-2">
+          <button onClick={handlePrint} className="timer-ctrl-btn" title="Сохранить как PDF">
+            <Icon name="Download" size={13} className="text-white/60" fallback="Circle" />
+          </button>
+          <button onClick={toggleFullscreen} className="timer-ctrl-btn" title={isFullscreen ? "Выйти из полноэкранного" : "Полноэкранный режим"}>
+            <Icon name={isFullscreen ? "Minimize2" : "Maximize2"} size={13} className="text-white/60" fallback="Circle" />
+          </button>
+          <div className="w-px h-5 bg-white/10 mx-1" />
           <div className="relative w-10 h-10">
             <svg viewBox="0 0 36 36" className="w-full h-full -rotate-90">
               <circle cx="18" cy="18" r="15.9" fill="none" stroke="#ffffff15" strokeWidth="2.5" />
@@ -384,7 +412,7 @@ export default function Index() {
       <div className="pres-kbd-hint">
         <Icon name="ArrowLeft" size={11} className="text-white/20" fallback="Circle" />
         <Icon name="ArrowRight" size={11} className="text-white/20" fallback="Circle" />
-        <span className="font-body text-white/20 text-[11px] ml-1">навигация</span>
+        <span className="font-body text-white/20 text-[11px] ml-1">навигация · F — полный экран</span>
       </div>
     </div>
   );
